@@ -3,7 +3,7 @@
 Plugin Name: BNS Helpers
 Plugin URI: http://buynowshop.com/
 Description: A collections of shortcodes and other helpful functions
-Version: 0.1
+Version: 0.2
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-helpers
@@ -15,7 +15,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * BNS Helpers
  *
  * @package     BNS_Helpers
- * @version     0.1
+ * @version     0.2
  * @date        January 2015
  *
  * @link        http://buynowshop.com/plugins/bns-helpers/
@@ -129,6 +129,12 @@ class BNS_Helpers {
 			'dropdown_child_pages_shortcode'
 		) );
 
+
+		add_shortcode( 'tool_tip', array(
+			$this,
+			'tool_tip_shortcode'
+		) );
+
 	} /** End function - constructor */
 
 
@@ -155,7 +161,13 @@ class BNS_Helpers {
 
 		/** Enqueue Scripts */
 		/** Enqueue toggling script which calls jQuery as a dependency */
-		wp_enqueue_script( 'bns_helpers_script', BNS_HELPERS_URL . 'js/bns-helpers-script.js', array( 'jquery' ), $bns_helpers_data['Version'], true );
+		wp_enqueue_script( 'bns_helpers_script', BNS_HELPERS_URL . 'js/bns-helpers-script.js', array(
+			'jquery',
+			'jquery-ui-widget',
+			'jquery-ui-tooltip',
+			'jquery-ui-position',
+			'jquery-ui-core'
+		), $bns_helpers_data['Version'], true );
 
 		/** Enqueue Style Sheets */
 		wp_enqueue_style( 'BNS-Helpers-Style', BNS_HELPERS_URL . 'css/bns-helpers-style.css', array(), $bns_helpers_data['Version'], 'screen' );
@@ -286,7 +298,7 @@ class BNS_Helpers {
 	 *
 	 * @return null|string
 	 *
-	 * @todo Clean up the form $output code?
+	 * @todo    Clean up the form $output code?
 	 */
 	function dropdown_child_pages_shortcode( $atts ) {
 
@@ -341,8 +353,51 @@ class BNS_Helpers {
 		return apply_filters( 'bns_helpers_dropdown_child_pages_shortcode', $output );
 
 	}
+
 	/** End function - child pages shortcode */
 
+
+	/**
+	 * Tool Tip Shortcode
+	 *
+	 * Produces a tool-tip shortcode useful for any number of ideas using the
+	 * default of an exclamation mark ( ! ) as the reference point.
+	 *
+	 * @package BNS_Helpers
+	 * @since   0.2
+	 *
+	 * @uses    apply_filters
+	 * @uses    esc_attr
+	 * @uses    shortcode_atts
+	 * @uses    wp_localize_script
+	 *
+	 * @param      $atts
+	 * @param null $content
+	 *
+	 * @return mixed|void
+	 */
+	function tool_tip_shortcode( $atts, $content = null ) {
+
+		/** @var array $defaults - optional arguments as shortcode parameters */
+		$defaults = shortcode_atts( array(
+			'character' => '!'
+		), $atts, 'tool_tip' );
+
+		/** @var string $content - make sure the content is sanitized */
+		$content = esc_attr( $content );
+
+		/** Pass the $content to the `bns_helpers_script` JavaScript */
+		wp_localize_script( 'bns_helpers_script', 'tool_tip_text', $content );
+
+		/** @var string $tool_tip_output - create the output */
+		$tool_tip_output = '<sup class="bns-tool-tip" title="' . $content . '">&nbsp;' . $defaults['character'] . '&nbsp;</sup>';
+
+		/** Now that we have the tool tip ... send it to be displayed */
+
+		return apply_filters( 'bns_helpers_tool_tip_output', $tool_tip_output );
+
+	}
+	/** End function - tool tip shortcode */
 
 }
 
