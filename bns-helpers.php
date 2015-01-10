@@ -368,6 +368,7 @@ class BNS_Helpers {
 	 *
 	 * @uses    apply_filters
 	 * @uses    esc_attr
+	 * @uses    esc_html
 	 * @uses    shortcode_atts
 	 * @uses    wp_localize_script
 	 *
@@ -383,16 +384,25 @@ class BNS_Helpers {
 			'character' => '!'
 		), $atts, 'tool_tip' );
 
-		/** @var string $content - make sure the content is sanitized */
-		$content = esc_attr( $content );
+		/** Sanity check - no content no reason to create any output */
+		if ( ! empty( $content ) ) {
 
-		/** Pass the $content to the `bns_helpers_script` JavaScript */
-		wp_localize_script( 'bns_helpers_script', 'tool_tip_text', $content );
+			/** @var string $content - make sure the content is sanitized */
+			$content = esc_attr( $content );
 
-		/** @var string $tool_tip_output - create the output */
-		$tool_tip_output = '<sup class="bns-tool-tip" title="' . $content . '">&nbsp;' . $defaults['character'] . '&nbsp;</sup>';
+			/** Pass the $content to the `bns_helpers_script` JavaScript */
+			wp_localize_script( 'bns_helpers_script', 'tool_tip_text', $content );
 
-		/** Now that we have the tool tip ... send it to be displayed */
+			/** @var string $tool_tip_output - create the output */
+			$tool_tip_output = '<sup class="bns-tool-tip" title="' . $content . '">&nbsp;' . esc_html( $defaults['character'] ) . '&nbsp;</sup>';
+
+		} else {
+
+			$tool_tip_output = null;
+
+		}
+
+		/** End if - content not empty */
 
 		return apply_filters( 'bns_helpers_tool_tip_output', $tool_tip_output );
 
