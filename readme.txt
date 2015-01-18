@@ -52,7 +52,7 @@ For additional details of what parameters are available, please have a look at t
 * `[ dropdown_child_pages ]` (advanced) - https://developer.wordpress.org/reference/functions/get_pages/
 
 The `[ tool_tip ]` shortcode has one parameter `character` which is set to an exclamation mark (!) as the default.
-An example usage is: `[ tool_tip character=?]This is the tool tip text![ /tool_tip ]` (with no spaces inside the square brackets)
+An example usage is: `[ tool_tip character=? ]This is the tool tip text![ /tool_tip ]` (with no spaces inside the square brackets)
 
 == Frequently Asked Questions ==
 Q: Where can I get support for this plugin?

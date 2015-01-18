@@ -129,7 +129,7 @@ class BNS_Helpers {
 			'dropdown_child_pages_shortcode'
 		) );
 
-
+		/** Add Tool Tip Shortcode */
 		add_shortcode( 'tool_tip', array(
 			$this,
 			'tool_tip_shortcode'
