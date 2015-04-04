@@ -3,7 +3,7 @@
 Plugin Name: BNS Helpers
 Plugin URI: http://buynowshop.com/
 Description: A collections of shortcodes and other helpful functions
-Version: 0.3
+Version: 0.2
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: bns-helpers
@@ -15,7 +15,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * BNS Helpers
  *
  * @package     BNS_Helpers
- * @version     0.3
+ * @version     0.2
  * @date        April 2015
  *
  * @link        http://buynowshop.com/plugins/bns-helpers/
@@ -123,7 +123,6 @@ class BNS_Helpers {
 			$this,
 			'dropdown_child_pages_shortcode'
 		) );
-
 
 		add_shortcode( 'tool_tip', array(
 			$this,
