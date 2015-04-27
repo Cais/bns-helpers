@@ -102,6 +102,10 @@ Screenshots were captured using the latest version of Opus Primus (https://wordp
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.3 =
+* Released 2015
+* Provide (temporary?) support against stored XSS issue with too long comments
+
 = 0.2 =
 * Released April 2015
 * Added `[ tool_tip ]` shortcode
